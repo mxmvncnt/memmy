@@ -6,10 +6,10 @@ import {selectPost} from "../../../slices/post/postSlice";
 import LemmyCommentsHelper from "../../../lemmy/LemmyCommentsHelper";
 import {lemmyAuthToken, lemmyInstance} from "../../../lemmy/LemmyInstance";
 import {setUpdateVote} from "../../../slices/feed/feedSlice";
-import {trigger} from "react-native-haptic-feedback";
 import {useToast} from "native-base";
 import {selectBookmarks} from "../../../slices/bookmarks/bookmarksSlice";
 import {addBookmark, removeBookmark} from "../../../slices/bookmarks/bookmarksActions";
+import { onVoteHapticFeedback } from "../../../helpers/HapticFeedbackHelpers";
 
 export const usePost = () => {
     const {
@@ -99,7 +99,7 @@ export const usePost = () => {
         const oldValue = currentPost.my_vote;
 
         // Play trigger
-        trigger("impactMedium");
+        onVoteHapticFeedback()
 
         // Update the state
         setCurrentPost({

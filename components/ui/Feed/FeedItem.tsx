@@ -26,6 +26,7 @@ import {getBaseUrl} from "../../../helpers/LinkHelper";
 import CommunityLink from "../CommunityLink";
 import {useNavigation} from "@react-navigation/native";
 import {NativeStackNavigationProp} from "@react-navigation/native-stack";
+import { onVoteHapticFeedback } from "../../../helpers/HapticFeedbackHelpers";
 
 interface FeedItemProps {
     post: PostView
@@ -47,7 +48,7 @@ const FeedItem = ({post}: FeedItemProps) => {
             vote: value,
         }));
 
-        trigger("impactMedium");
+        onVoteHapticFeedback()
 
         try {
             await lemmyInstance.likePost({

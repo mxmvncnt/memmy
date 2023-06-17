@@ -7,7 +7,6 @@ import moment from "moment";
 import {truncateName} from "../../helpers/TextHelper";
 import {depthToColor} from "../../helpers/ColorHelper";
 import {GestureHandlerRootView, PanGestureHandler,} from "react-native-gesture-handler";
-import {trigger} from "react-native-haptic-feedback";
 import {useAppDispatch, useAppSelector} from "../../store";
 import Animated, {
     runOnJS,
@@ -23,6 +22,7 @@ import {NativeStackNavigationProp} from "@react-navigation/native-stack";
 import {getBaseUrl} from "../../helpers/LinkHelper";
 import {selectSettings} from "../../slices/settings/settingsSlice";
 import RenderMarkdown from "./markdown/RenderMarkdown";
+import { onVoteHapticFeedback } from "../../helpers/HapticFeedbackHelpers";
 
 interface CommentItemProps {
     comment: ILemmyComment,
@@ -109,13 +109,16 @@ const CommentItem = ({comment, depth = 1}: CommentItemProps) => {
             }
 
             if(event.translationX >= width * .20 && !ranFeedbackUpvote.value) {
-                runOnJS(trigger)("impactHeavy");
+                // runOnJS(trigger)("impactHeavy");
+                onVoteHapticFeedback()
                 ranFeedbackUpvote.value = true;
             } else if(event.translationX >= width * .40 && !ranFeedbackDownvote.value) {
-                runOnJS(trigger)("impactHeavy");
+                // runOnJS(trigger)("impactHeavy");
+                onVoteHapticFeedback()
                 ranFeedbackDownvote.value = true;
             } else if(event.translationX <= -(width * .2) && !ranFeedbackComment.value) {
-                runOnJS(trigger)("impactHeavy");
+                // runOnJS(trigger)("impactHeavy");
+                onVoteHapticFeedback()
                 ranFeedbackComment.value = true;
             }
         },
